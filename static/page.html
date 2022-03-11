@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+    <script>
+        const get_data = async (endpoint) => {
+            var lab = document.getElementById("energy_label");
+            let energy;
+            let time;
+            await fetch(endpoint)
+                .then(res => {
+                if (res.ok) {
+                    console.log('SUCCESS: ' + endpoint)
+                } else {
+                    console.log("ERROR: " + endpoint)
+                } return res.json() }) 
+                .then(data => {
+                    energy = data.energy;
+                    time = data.time;
+                    console.log(data);
+                })
+                .catch(error => console.log('ERROR: ' + endpoint));
+            lab.innerHTML = 'Energy consumed = '+ String(energy) + ' mJ in ' + String(time) + 'ns';
+        }
+
+        
+        function updateEnergy(saver) {
+            if (saver == true) { 
+                get_data('/api/energy_efficient');}
+
+            else {
+                get_data('/api/energy_default'); }
+        }
+    </script>
+    <head>
+        <link rel="stylesheet" href="page.css">
+        <!-- <script src="/Users/emilywidjaja/Documents/Net Runner/logic.js"></script> -->
+        <title>Green DNNS 4YP</title>
+    </head>
+    <body>
+        <h1>Description</h1>
+        <p>a description of how this works</p>
+        <h1>Images</h1>
+        <p>Select one of the images below and hit the button to run.</p>
+        <div class="row">
+            <div class="column">
+              <p>Normal classification</p>
+              <img src="parachute/ILSVRC2012_val_00001440.JPEG" alt="icon48" style="width:100%">
+              <button id="default_button" type="button" onclick="updateEnergy(false)">Click me!</button>
+            </div>
+            <div class="column">
+              <p>Energy efficient classification</p>
+              <img src="parachute/n03888257_42.JPEG" alt="icon128" style="width:100%">
+              <button id="energy_button" type="button" onclick="updateEnergy(true)">Click me!</button>
+            </div>
+          </div>
+        <label id="energy_label"> Energy consumed = 0 mJ</label>
+    </body>
+</html>
