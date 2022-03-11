@@ -1,6 +1,6 @@
 import uvicorn
 from loguru import logger
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from app.core.config import PROJECT_TITLE, PROJECT_DESCRIPTION, PROJECT_VERSION
 from app.core.settings import GLOBAL_CONFIG_OBJ
 from app.core.settings import DEFAULT_ROUTE_STR
-from app.controllers import router
+from app.controllers.example_controller import router
 
 
 app = FastAPI(
@@ -34,7 +34,12 @@ def ping_server():
     """
     Simple health check
     """
-    return {f"I am fine"}
+
+    logger.info(app.url_path_for('ping_server'))
+    print(app.url_path_for('ping_server'))
+    return {f"I am fine." }
+
+
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")

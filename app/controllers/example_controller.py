@@ -1,8 +1,8 @@
 from loguru import logger
 from fastapi import APIRouter, Depends, File, UploadFile
-from processing_methods import process_image
+from app.controllers.processing_methods import process_image
 
-example_router = APIRouter()
+router = APIRouter()
 
 
 # @example_router.post("/")
@@ -17,7 +17,7 @@ example_router = APIRouter()
 #     return {"file_name": file.filename}
 
 
-@example_router.get("/api/energy_default")
+@router.get("/api/energy_default")
 async def energy_default():
     """ """
 
@@ -26,7 +26,7 @@ async def energy_default():
 
     return {"energy": energy, "time": time}
 
-@example_router.get("/api/energy_efficient")
+@router.get("/api/energy_efficient")
 async def energy_efficient():
     """ """
 
