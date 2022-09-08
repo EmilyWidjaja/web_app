@@ -1,5 +1,5 @@
 # web_app
-website application for 4yp
+website application for 4yp. Code is available on master branch.
 
 # API
 
